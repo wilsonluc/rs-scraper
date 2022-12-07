@@ -5,12 +5,13 @@ function App() {
   const [backendData, setBackendData] = useState([{}])
 
   useEffect (() => {
-    fetch("/api").then(
+    fetch("/getItems").then(
       // Json data
       response => response.json()
     ).then(
       data => {
         setBackendData(data)
+        console.log(data)
       }
     )
   }, [])
@@ -18,11 +19,11 @@ function App() {
   return (
     <div>
 
-      {(typeof backendData.users === 'undefined') ? (
+      {(typeof backendData.items === 'undefined') ? (
         <p>Loading...</p>
       ): (
-        backendData.users.map((user, i) => (
-          <p key={i}>{user}</p>
+        backendData.items.map((item, i) => (
+          <p key={i}>ID: {item.id}, Price low: {item.low}, Price high: {item.high}</p>
         ))
       )}
       
