@@ -23,7 +23,11 @@ function App() {
         <p>Loading...</p>
       ): (
         backendData.items.map((item, i) => (
-          <p key={i}>ID: {item.id}, Price low: {item.low}, Price high: {item.high}</p>
+          //https://stackoverflow.com/questions/51184136/display-an-image-from-url-in-reactjs
+
+          // What I want to display:
+          // Image, Name, ?ID, Item instabuy/sell, Trade volume, ROI, Potential Profit, Member item?, Tax? 
+          <p key={i}>Name: {item.name}, ID: {item.id}, Price low: {item.low}, Price high: {item.high}, High Alch: {item.highAlch}, Buy Limit: {item.limit}, Member Item: {item.isMember}</p>
         ))
       )}
       
