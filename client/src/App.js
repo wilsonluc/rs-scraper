@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react'
+import './App.css'
+import BootstrapTable from 'react-bootstrap-table-next';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 function App() {
-
+  
   const [backendData, setBackendData] = useState([{}])
 
   useEffect (() => {
@@ -11,28 +14,73 @@ function App() {
     ).then(
       data => {
         setBackendData(data)
-        console.log(data)
       }
     )
   }, [])
 
-  return (
-    <div>
+  var isEmpty = typeof backendData.items === 'undefined'
 
-      {(typeof backendData.items === 'undefined') ? (
-        <p>Loading...</p>
-      ): (
-        backendData.items.map((item, i) => (
-          //https://stackoverflow.com/questions/51184136/display-an-image-from-url-in-reactjs
+  if (isEmpty) {
+    return (
+      <p>Loading...</p>
+    )
+  }
+  else {
+    const columns = [{
+      dataField: "id",
+      text: "id"
+    },
+    {
+      dataField: "name",
+      text: "name",
+      filter: textFilter()
+    }, 
+    {
+      dataField: "",
+      text: "currentPrice",
+    }, 
+    {
+      dataField: "low",
+      text: "Approx. Offer Price",
+    }, 
+    {
+      dataField: "high",
+      text: "Approx. Sell Price",
+    }, 
+    {
+      dataField: "tax",
+      text: "Tax"
+    },
+    {
+      dataField: "approxProfit",
+      text: "Approx. Profit (gp)"
+    },
+    {
+      dataField: "roi",
+      text: "ROI%",
+    }, 
+    {
+      dataField: "",
+      text: "Buying Quantity (per hour)",
+    }, 
+    {
+      dataField: "",
+      text: "Selling Quantity (per hour)",
+    }, 
+    {
+      dataField: "",
+      text: "Buy/Sell Ratio",
+    }, 
+    {
+      dataField: "limit",
+      text: "GE limit"
+    }]
 
-          // What I want to display:
-          // Image, Name, ?ID, Item instabuy/sell, Trade volume, ROI, Potential Profit, Member item?, Tax? 
-          <p key={i}>Name: {item.name}, ID: {item.id}, Price low: {item.low}, Price high: {item.high}, High Alch: {item.highAlch}, Buy Limit: {item.limit}, Member Item: {item.isMember}</p>
-        ))
-      )}
-      
-    </div>
-  )
+
+    return(
+      <BootstrapTable keyField='id' data={ backendData.items } columns={ columns } filter={ filterFactory()}/>
+    )    
+  }
 }
 
 export default App

@@ -31,7 +31,10 @@ app.get("/getItems", (req, res) => {
                 high: item.high,
                 highTime: item.highTime,
                 low: item.low,
-                lowTime: item.lowTime
+                lowTime: item.lowTime,
+                tax: -Math.floor(item.high*0.01),
+                approxProfit: item.high-Math.floor(item.high*0.01)-item.low,
+                roi: Math.round(((item.high-Math.floor(item.high*0.01)-item.low)*100/item.low) * 100.0) / 100.0
             }
         }        
     })
